@@ -7,6 +7,7 @@ import { format } from "date-fns";
 // import { createLogger } from 'vite'
 
 const MyPostedJobs = () => {
+  
   const [jobs,setJobs]=useState([])
   const {user}=useContext(AuthContext)
   useEffect(()=>{
