@@ -56,11 +56,11 @@ const UpdateJob = () => {
 
     try {
     const {data}=  await axios.put(`${import.meta.env.VITE_API_URL}/update-job/${id}`, jobData);
-    console.log(data);
+    // console.log(data);
       toast.success("successfully updated");
       navigate("/my-posted-jobs");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.message);
     }
   };

@@ -25,10 +25,10 @@ const JobDetails = () => {
       const { data } = await axios.get(
         `${import.meta.env.VITE_API_URL}/job/${id}`
       );
-      console.log(data);
+      // console.log(data);
       setJob(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -87,11 +87,11 @@ const JobDetails = () => {
         `${import.meta.env.VITE_API_URL}/add-bids`,
         bidsData
       );
-      console.log(data);
+      // console.log(data);
       toast.success("succesflly bids job");
       navigate("/my-bids");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.response.data);
     }
   };

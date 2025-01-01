@@ -17,7 +17,7 @@ const useAuthSecure = () => {
         return res;
       },
       async (error) => {
-        console.log("error happen from server", error.response);
+        // console.log("error happen from server", error.response);
         if (error.response.status === 401 || error.response.status === 404) {
           // logout
           logOut();

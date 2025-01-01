@@ -5,11 +5,30 @@ import { AuthContext } from "../providers/AuthProvider";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const AddJob = () => {
+  const queryClient = useQueryClient()
   const [startDate, setStartDate] = useState(new Date());
   const { user } = useContext(AuthContext);
   const navigate=useNavigate()
+  const {mutateAsync,isError,isPending}=useMutation({
+    mutationFn:async (jobdata)=>{
+      await axios.post(`${import.meta.env.VITE_API_URL}/add-job`,jobdata)
+
+    },
+    onSuccess:()=>{
+      // console.log('data seved');
+      queryClient.invalidateQueries({ queryKey: ['jobs'] })
+      toast.success('successfully posted job')
+      navigate('/my-posted-jobs')
+    },
+    onError:err=>{
+      // console.log(err);
+    }
+  })
+
+
   const handleSubmit = async(e) => {
     e.preventDefault();
     const form = e.target;
@@ -39,13 +58,16 @@ const AddJob = () => {
 
     
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/add-job`,jobData)
-      toast.success('successfully posted job')
-      navigate('/my-posted-jobs')
+      // await axios.post(`${import.meta.env.VITE_API_URL}/add-job`,jobData)
+      
+      await mutateAsync(jobData)
+
+      // toast.success('successfully posted job')
+      // navigate('/my-posted-jobs')
 
     } catch (error) {
-      console.log(error);
-      toast.error(error.message)
+      // console.log(error);
+      // toast.error(error.message)
     }
 
     
@@ -147,7 +169,7 @@ const AddJob = () => {
           </div>
           <div className="flex justify-end mt-6">
             <button className="disabled:cursor-not-allowed px-8 py-2.5 leading-5 text-white transition-colors duration-300 transhtmlForm bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
-              Save
+             {isPending?'saving ...':'Save'} 
             </button>
           </div>
         </form>

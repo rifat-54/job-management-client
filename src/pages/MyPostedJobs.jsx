@@ -29,11 +29,11 @@ const MyPostedJobs = () => {
   const handleDelete=async(id)=>{
     try {
       const {data}=await axios.delete(`${import.meta.env.VITE_API_URL}/job/${id}`)
-      console.log(data);
+      // console.log(data);
       toast.success('data deleted succesfully!!!')
       fetchAll()
     } catch (error) {
-       console.log(error);
+      //  console.log(error);
        toast.error(error?.message)
     }
   }
